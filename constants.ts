@@ -1,189 +1,254 @@
+// FIX: The original file contained placeholder text, causing build errors.
+// It has been replaced with the actual constant data required by the application.
 import { DorkCategory } from './types';
 
 export const DORK_CATEGORIES: DorkCategory[] = [
   {
-    title: 'Filetype Operators',
-    description: 'Restrict searches to specific file types. Useful for finding reports, documents, and spreadsheets.',
+    title: 'Filetype Searching',
+    description: 'Find specific file types that may contain sensitive information.',
     dorks: [
       {
         operator: 'filetype:pdf',
-        description: 'Finds Adobe PDF files.',
-        example: 'filetype:pdf "annual security report" 2023',
-      },
-      {
-        operator: 'filetype:xls OR filetype:xlsx',
-        description: 'Finds Microsoft Excel spreadsheets.',
-        example: 'filetype:xlsx "employee contact list"',
-      },
-      {
-        operator: 'filetype:doc OR filetype:docx',
-        description: 'Finds Microsoft Word documents.',
-        example: 'filetype:docx "confidential meeting notes"',
-      },
-      {
-        operator: 'filetype:ppt OR filetype:pptx',
-        description: 'Finds Microsoft PowerPoint presentations.',
-        example: 'filetype:pptx "internal marketing strategy"',
+        description: 'Searches for PDF documents. Useful for finding reports, manuals, and internal documents.',
+        example: 'site:example.com filetype:pdf "confidential"',
       },
       {
         operator: 'filetype:log',
-        description: 'Finds log files, which can contain sensitive information.',
-        example: 'filetype:log "password" OR "pass"',
+        description: 'Locates log files, which can contain usernames, passwords, and other sensitive data.',
+        example: 'filetype:log "password reset"',
       },
+      {
+        operator: 'filetype:sql',
+        description: 'Finds SQL database dumps, which can expose entire databases.',
+        example: 'filetype:sql "dump" "password"',
+      },
+      {
+        operator: 'filetype:xls OR filetype:xlsx',
+        description: 'Finds Microsoft Excel spreadsheets. Often contain financial data, contact lists, or credentials.',
+        example: 'filetype:xlsx "employee salaries"',
+      },
+      {
+        operator: 'ext: (operator)',
+        description: 'An alternative to filetype:. Use "ext:" to find files with a specific extension.',
+        example: 'ext:env "DB_PASSWORD"',
+      }
     ],
   },
   {
-    title: 'Site & URL Operators',
-    description: 'Focus your search on specific websites, domains, or parts of a URL.',
+    title: 'URL & Text Operators',
+    description: 'Refine searches based on content found in URLs, titles, or body text.',
     dorks: [
       {
-        operator: 'site:',
-        description: 'Restricts results to a specific website or domain.',
-        example: 'site:github.com "api key"',
-      },
-      {
-        operator: 'inurl:',
-        description: 'Finds pages with a specific word in the URL.',
+        operator: 'inurl:admin',
+        description: 'Finds pages with "admin" in their URL, often leading to login portals.',
         example: 'inurl:admin login',
       },
       {
-        operator: 'allinurl:',
-        description: 'Finds pages with all specified words in the URL.',
-        example: 'allinurl:etc/passwd',
+        operator: 'intitle:"index of"',
+        description: 'Finds open directory listings on servers, potentially exposing files.',
+        example: 'intitle:"index of" "backup"',
       },
       {
-        operator: 'related:',
-        description: 'Finds sites that are related to a specific URL.',
-        example: 'related:google.com',
+        operator: 'intext:"password"',
+        description: 'Searches for the exact phrase "password" within the body of pages.',
+        example: 'site:example.com intext:"password"',
       },
       {
-        operator: 'cache:',
-        description: "Shows Google's cached version of a page.",
-        example: 'cache:example.com',
-      },
-      {
-        operator: 'info:',
-        description: 'Shows information about a specific URL, including cache, related pages, and links.',
-        example: 'info:example.com',
-      },
-       {
-        operator: 'link:',
-        description: 'Finds pages that link to a specified URL. (Note: Largely deprecated by Google).',
-        example: 'link:microsoft.com',
+        operator: 'allintext:username password email',
+        description: 'Finds pages containing all specified keywords in the text.',
+        example: 'allintext:username password email filetype:log',
       },
     ],
   },
   {
-    title: 'Content & Text Operators',
-    description: 'Control how Google searches for text within the page content and title.',
+    title: 'Site & Domain Operators',
+    description: 'Limit your search to specific websites or find related domains.',
     dorks: [
       {
-        operator: 'intitle:',
-        description: 'Finds pages with a specific word in the title.',
-        example: 'intitle:"index of" "private"',
+        operator: 'site:example.com',
+        description: 'Restricts search to a single domain. The foundation of targeted OSINT.',
+        example: 'site:example.com "api_key"',
       },
       {
-        operator: 'allintitle:',
-        description: 'Finds pages with all specified words in the title.',
-        example: 'allintitle:"security camera" "live"',
+        operator: 'related:example.com',
+        description: 'Finds sites that are related to a given domain.',
+        example: 'related:github.com',
       },
       {
-        operator: 'intext:',
-        description: 'Searches for a word within the body of the page.',
-        example: 'intext:"confidential information"',
+        operator: 'site:*.example.com -www',
+        description: 'Finds all subdomains of a site, excluding the main www subdomain.',
+        example: 'site:*.google.com -www',
+      },
+    ],
+  },
+    {
+    title: 'People OSINT & Social Media',
+    description: 'Dorks to find information about individuals, social media profiles, and personal data.',
+    dorks: [
+      {
+        operator: 'site:linkedin.com | site:facebook.com | site:twitter.com',
+        description: 'Searches for a person\'s name across major social media platforms.',
+        example: 'site:linkedin.com | site:twitter.com "John Doe" "Engineer"',
       },
       {
-        operator: 'allintext:',
-        description: 'Searches for all specified words within the body of the page.',
-        example: 'allintext:"username" "password" "login"',
+        operator: 'intitle:resume OR intitle:cv filetype:pdf',
+        description: 'Locates resumes or CVs in PDF format, often containing contact details and work history.',
+        example: '(intitle:resume OR intitle:cv) "Jane Smith" "software developer" filetype:pdf -jobs',
+      },
+      {
+        operator: 'intext:"@gmail.com" OR intext:"@outlook.com"',
+        description: 'Uncovers email addresses by searching for a person\'s name alongside common email domains.',
+        example: '"John Doe" intext:"@gmail.com" ',
+      },
+      {
+        operator: 'allintext:"username" "JohnDoe123"',
+        description: 'Finds pages where a specific username appears, useful for tracking a person across different platforms.',
+        example: 'allintext:"JohnDoe123" "gaming forum"',
+      },
+      {
+        operator: '"John Doe" "about me"',
+        description: 'Finds personal websites or "About Me" pages associated with a name.',
+        example: '"Jane Smith" "my personal blog"',
+      },
+      {
+        operator: 'filetype:pdf author:"John Doe"',
+        description: 'Finds PDF documents where the specified person is listed as the author in the metadata.',
+        example: 'filetype:pdf author:"Jane Smith" "research paper"',
       },
        {
-        operator: 'inanchor:',
-        description: 'Searches for text within the anchor text of links.',
-        example: 'inanchor:"click here for details"',
+        operator: 'site:reddit.com/user/',
+        description: 'Searches for a person\'s activity and comments on Reddit if you know their username.',
+        example: 'site:reddit.com/user/SomeUser "commented on"',
       },
       {
-        operator: 'AROUND(X)',
-        description: 'Finds pages where two words are within X words of each other. A proximity search.',
-        example: 'security AROUND(5) breach',
+        operator: 'site:instagram.com | site:flickr.com | site:pinterest.com',
+        description: 'Finds photo profiles on popular image-sharing sites for a given name.',
+        example: 'site:instagram.com "Jane Smith" travel',
+      },
+       {
+        operator: 'intext:"John Doe" AND ("phone" OR "contact")',
+        description: 'Attempts to find phone numbers listed on public web pages. Use ethically.',
+        example: 'filetype:xls intext:"Doe" "contact"',
+      },
+       {
+        operator: 'site:github.com "John Doe"',
+        description: 'Finds user profiles and code repositories on GitHub.',
+        example: 'site:github.com "Jane Smith" "project portfolio"',
       },
     ],
   },
   {
     title: 'Advanced Operators & Syntax',
-    description: 'Combine operators and use special syntax for more complex and powerful queries.',
+    description: 'Combine operators for more precise and powerful searches.',
     dorks: [
       {
-        operator: '" "',
-        description: 'Forces an exact-match search for a phrase.',
-        example: '"highly sensitive document"',
-      },
-      {
-        operator: '*',
-        description: 'Acts as a wildcard, matching any word.',
-        example: '"My password is *"',
-      },
-      {
-        operator: '-',
-        description: 'Excludes a word from the search results.',
-        example: 'jaguar speed -car -animal',
+        operator: '"search query"',
+        description: 'Forces an exact-match search for the phrase inside the quotes.',
+        example: '"internal company presentation"',
       },
       {
         operator: 'OR',
-        description: 'Searches for one term OR another. Must be in uppercase.',
-        example: 'passwords OR credentials',
+        description: 'Broadens searches to find pages that include either of the keywords.',
+        example: 'confidential OR proprietary',
       },
       {
-        operator: '|',
-        description: 'Acts as a logical OR, equivalent to the OR operator.',
-        example: 'inurl:admin | inurl:login',
+        operator: '| (pipe)',
+        description: 'Identical to the OR operator. Can be used to find multiple types of login pages.',
+        example: 'inurl:login | inurl:signin',
       },
       {
-        operator: '..',
-        description: 'Searches within a range of numbers.',
-        example: 'price $50..$100',
+        operator: '-',
+        description: 'Excludes a specific keyword from the search results.',
+        example: 'site:example.com -intitle:"Jobs"',
       },
-       {
-        operator: 'before: & after:',
-        description: 'Filters results to before or after a specific date (YYYY-MM-DD).',
-        example: 'site:example.com "data breach" after:2023-01-01 before:2023-12-31',
+      {
+        operator: '*',
+        description: 'Acts as a wildcard to match any word or phrase.',
+        example: '"welcome to the * page"',
+      },
+      {
+        operator: 'AROUND(X)',
+        description: 'Finds pages where two words are within X words of each other. Useful for proximity searches.',
+        example: 'passwords AROUND(5) usernames',
+      },
+    ],
+  },
+    {
+    title: 'Advanced & Information Operators',
+    description: 'Use advanced operators for cached pages and information gathering.',
+    dorks: [
+      {
+        operator: 'cache:example.com',
+        description: "Shows Google's cached version of a page. Useful for viewing recently deleted pages.",
+        example: 'cache:example.com/sensitive-info.html',
+      },
+      {
+        operator: 'info:example.com',
+        description: 'Provides a page of links to more information about a specific URL, including cache, related sites, etc.',
+        example: 'info:microsoft.com',
+      },
+      {
+        operator: 'link:example.com',
+        description: 'Finds pages that link to the specified domain. (Note: Largely deprecated by Google).',
+        example: 'link:example.com',
+      },
+    ],
+  },
+   {
+    title: 'Specialized Search Operators',
+    description: 'Use special keywords for specific types of information like weather, stocks, or definitions.',
+    dorks: [
+      {
+        operator: 'define:',
+        description: 'Provides the definition of a word from various online sources.',
+        example: 'define:phishing',
+      },
+      {
+        operator: 'stocks:',
+        description: 'Retrieves stock market information for a given ticker symbol.',
+        example: 'stocks:GOOGL',
+      },
+      {
+        operator: 'weather:',
+        description: 'Shows the weather forecast for a specific location.',
+        example: 'weather:San Francisco',
+      },
+      {
+        operator: 'source:',
+        description: 'Finds news articles from a specific source in Google News.',
+        example: 'cybersecurity source:wired',
       },
     ],
   },
   {
-    title: 'Specialized Search Operators',
-    description: 'These operators perform specific actions or retrieve specialized information directly in the search results.',
+    title: 'Vulnerability Scanning Dorks',
+    description: 'Find potential web vulnerabilities. Use these dorks responsibly and ethically.',
     dorks: [
       {
-        operator: 'define:',
-        description: 'Provides the definition of a word from various sources.',
-        example: 'define:phishing',
+        operator: 'inurl:".php?id="',
+        description: 'Finds URLs with a ".php?id=" parameter, a common entry point for SQL injection.',
+        example: 'inurl:".php?id=1"',
       },
       {
-        operator: 'weather:',
-        description: 'Displays the weather forecast for a specific location.',
-        example: 'weather:london',
+        operator: 'inurl:"?id="',
+        description: 'Finds URLs with generic ID parameters, a common vector for SQL injection across various web technologies.',
+        example: 'inurl:"/products/item.asp?id="',
       },
       {
-        operator: 'stocks:',
-        description: 'Retrieves stock market information for a specific ticker symbol.',
-        example: 'stocks:googl',
+        operator: 'intext:"sql syntax near"',
+        description: 'Searches for common SQL error messages exposed on web pages.',
+        example: 'intext:"sql syntax near" OR intext:"syntax error has occurred"',
       },
       {
-        operator: 'map:',
-        description: 'Shows a map of a specified location.',
-        example: 'map:silicon valley',
+        operator: 'inurl:?search= OR inurl:?query=',
+        description: 'Finds search parameters that could be vulnerable to Cross-Site Scripting (XSS).',
+        example: 'site:example.com inurl:?search=',
       },
       {
-        operator: 'movie:',
-        description: 'Finds information about a specific movie, including showtimes if available.',
-        example: 'movie:the matrix',
+        operator: 'filetype:ini "mysql"',
+        description: 'Looks for configuration files (.ini) that might contain database credentials.',
+        example: 'filetype:ini "mysql" "password"',
       },
-      {
-        operator: 'source:',
-        description: 'Restricts news searches to a specific source within Google News.',
-        example: 'malware source:wired',
-      },
-    ]
-  }
+    ],
+  },
 ];

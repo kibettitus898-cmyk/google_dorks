@@ -31,4 +31,14 @@ export const OSINT_RESOURCES: OsintResource[] = [
     description: 'Explore archived versions of websites to see how they have changed over time.',
     url: 'https://archive.org/web/',
   },
+  {
+    name: 'PDFYeah',
+    description: 'View metadata of PDF documents to uncover hidden information like author, creation date, and software used.',
+    url: 'https://www.pdfyeah.com/view-pdf-metadata/',
+  },
+  {
+    name: 'DorkGPT',
+    description: 'An AI-powered tool for generating Google Dorks to streamline your OSINT research.',
+    url: 'https://www.dorkgpt.com/',
+  },
 ];

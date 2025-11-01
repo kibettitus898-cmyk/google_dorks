@@ -13,6 +13,9 @@ import EmailHarvestingSection from './components/EmailHarvestingSection';
 import EmailValidationSection from './components/EmailValidationSection';
 import OnlineProfilingSection from './components/OnlineProfilingSection';
 import BreachedCredentialsSection from './components/BreachedCredentialsSection';
+import SearchIcon from './components/icons/SearchIcon';
+import ToolboxIcon from './components/icons/ToolboxIcon';
+import BookIcon from './components/icons/BookIcon';
 
 type Tab = 'dorks' | 'toolkit' | 'resources';
 
@@ -84,7 +87,7 @@ const App: React.FC = () => {
         const dorksInCategory = category.dorks.filter(dork => selectedDorksForPlan.has(dork.operator));
 
         if (dorksInCategory.length > 0) {
-            content += `## ${category.title}\n\n`;
+            content += `## ${category.emoji || ''} ${category.title}\n\n`;
             dorksInCategory.forEach(dork => {
                 const siteOperator = targetUrl.trim() ? `site:${targetUrl.trim()}` : '';
                 const siteRegex = /site:[^\s]+/g;
@@ -139,10 +142,10 @@ const App: React.FC = () => {
     setSelectedDorksForPlan(new Set());
   };
 
-  const tabs: { id: Tab, label: string }[] = [
-    { id: 'dorks', label: 'Dorks' },
-    { id: 'toolkit', label: 'OSINT Toolkit' },
-    { id: 'resources', label: 'Resources' },
+  const tabs: { id: Tab, label: string, icon: React.ReactNode }[] = [
+    { id: 'dorks', label: 'Dorks', icon: <SearchIcon className="w-5 h-5 mr-2" /> },
+    { id: 'toolkit', label: 'OSINT Toolkit', icon: <ToolboxIcon className="w-5 h-5 mr-2" /> },
+    { id: 'resources', label: 'Resources', icon: <BookIcon className="w-5 h-5 mr-2" /> },
   ];
 
   const renderContent = () => {
@@ -224,9 +227,10 @@ const App: React.FC = () => {
                           activeTab === tab.id
                               ? 'border-cyan-400 text-cyan-400'
                               : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-500'
-                      } whitespace-nowrap py-4 px-2 md:px-4 border-b-2 font-medium text-base md:text-lg transition-colors focus:outline-none`}
+                      } flex items-center whitespace-nowrap py-4 px-2 md:px-4 border-b-2 font-medium text-base md:text-lg transition-colors focus:outline-none`}
                       aria-current={activeTab === tab.id ? 'page' : undefined}
                   >
+                      {tab.icon}
                       {tab.label}
                   </button>
               ))}

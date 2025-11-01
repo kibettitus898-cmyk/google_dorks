@@ -3,6 +3,7 @@ import React from 'react';
 const categories = [
     {
         title: 'Kali Linux tools',
+        emoji: '🐧',
         color: 'bg-slate-600',
         tools: [
             { name: 'holehe', url: 'https://github.com/megadose/holehe', description: 'Check if an email is used on different sites.' },
@@ -14,6 +15,7 @@ const categories = [
     },
     {
         title: 'Online tools',
+        emoji: '☁️',
         color: 'bg-blue-800',
         tools: [
             { name: 'Whatsmyname', url: 'https://whatsmyname.app/', description: 'Enumerate usernames across many services.' },
@@ -25,6 +27,7 @@ const categories = [
     },
     {
         title: 'Paid Tools',
+        emoji: '💳',
         color: 'bg-blue-600',
         tools: [
             { name: 'Epios', url: 'https://epieos.com/', description: 'Find information from an email or a phone number.' },
@@ -39,7 +42,7 @@ const OnlineProfilingSection: React.FC = () => {
     return (
         <section className="mt-20">
             <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-slate-100">Online Profiling</h2>
+                <h2 className="text-3xl font-bold text-slate-100">👤 Online Profiling</h2>
                 <p className="text-slate-400 mt-2 max-w-3xl mx-auto">
                     A collection of tools for username enumeration and online profiling to build a digital identity of a target.
                 </p>
@@ -49,6 +52,7 @@ const OnlineProfilingSection: React.FC = () => {
                     {categories.map(category => (
                         <div key={category.title}>
                             <h3 className={`text-lg font-semibold text-white px-4 py-2 rounded-md mb-4 text-center ${category.color}`}>
+                                <span className="mr-2">{category.emoji}</span>
                                 {category.title}
                             </h3>
                             <ul className="space-y-4">

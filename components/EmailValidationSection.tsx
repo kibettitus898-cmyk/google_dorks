@@ -32,7 +32,7 @@ const EmailValidationSection: React.FC = () => {
     return (
         <section className="mt-20">
             <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-slate-100">Validating Emails</h2>
+                <h2 className="text-3xl font-bold text-slate-100">✅ Validating Emails</h2>
                 <p className="text-slate-400 mt-2 max-w-3xl mx-auto">
                     Once you've harvested potential emails, use these tools to verify their authenticity and validity.
                 </p>
@@ -40,6 +40,7 @@ const EmailValidationSection: React.FC = () => {
             <div className="max-w-2xl mx-auto bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8">
                  <div>
                     <h3 className="text-lg font-semibold text-white px-4 py-2 rounded-md mb-4 text-center bg-blue-800">
+                        <span className="mr-2">☁️</span>
                         Online tools
                     </h3>
                     <ul className="space-y-4">

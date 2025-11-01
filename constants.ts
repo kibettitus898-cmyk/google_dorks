@@ -6,6 +6,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
   {
     title: 'Filetype Searching',
     description: 'Find specific file types that may contain sensitive information.',
+    emoji: '📄',
     dorks: [
       {
         operator: 'filetype:pdf',
@@ -15,28 +16,29 @@ export const DORK_CATEGORIES: DorkCategory[] = [
       {
         operator: 'filetype:log',
         description: 'Locates log files, which can contain usernames, passwords, and other sensitive data.',
-        example: 'filetype:log "password reset"',
+        example: 'site:example.com filetype:log "password reset"',
       },
       {
         operator: 'filetype:sql',
         description: 'Finds SQL database dumps, which can expose entire databases.',
-        example: 'filetype:sql "dump" "password"',
+        example: 'site:example.com filetype:sql "dump" "password"',
       },
       {
         operator: 'filetype:xls OR filetype:xlsx',
         description: 'Finds Microsoft Excel spreadsheets. Often contain financial data, contact lists, or credentials.',
-        example: 'filetype:xlsx "employee salaries"',
+        example: 'site:example.com filetype:xlsx "employee salaries"',
       },
       {
         operator: 'ext: (operator)',
         description: 'An alternative to filetype:. Use "ext:" to find files with a specific extension.',
-        example: 'ext:env "DB_PASSWORD"',
+        example: 'site:example.com ext:env "DB_PASSWORD"',
       }
     ],
   },
   {
     title: 'URL & Text Operators',
     description: 'Refine searches based on content found in URLs, titles, or body text.',
+    emoji: '✍️',
     dorks: [
       {
         operator: 'inurl:admin',
@@ -63,6 +65,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
   {
     title: 'Site & Domain Operators',
     description: 'Limit your search to specific websites or find related domains.',
+    emoji: '🌐',
     dorks: [
       {
         operator: 'site:example.com',
@@ -84,6 +87,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
     {
     title: 'People OSINT & Social Media',
     description: 'Dorks to find information about individuals, social media profiles, and personal data.',
+    emoji: '👥',
     dorks: [
       {
         operator: 'site:linkedin.com | site:facebook.com | site:twitter.com',
@@ -140,6 +144,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
   {
     title: 'Advanced Operators & Syntax',
     description: 'Combine operators for more precise and powerful searches.',
+    emoji: '⚙️',
     dorks: [
       {
         operator: '"search query"',
@@ -176,6 +181,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
     {
     title: 'Advanced & Information Operators',
     description: 'Use advanced operators for cached pages and information gathering.',
+    emoji: 'ℹ️',
     dorks: [
       {
         operator: 'cache:example.com',
@@ -197,6 +203,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
    {
     title: 'Specialized Search Operators',
     description: 'Use special keywords for specific types of information like weather, stocks, or definitions.',
+    emoji: '⭐',
     dorks: [
       {
         operator: 'define:',
@@ -223,6 +230,7 @@ export const DORK_CATEGORIES: DorkCategory[] = [
   {
     title: 'Vulnerability Scanning Dorks',
     description: 'Find potential web vulnerabilities. Use these dorks responsibly and ethically.',
+    emoji: '🛡️',
     dorks: [
       {
         operator: 'inurl:".php?id="',

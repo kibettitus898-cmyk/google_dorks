@@ -8,6 +8,7 @@ export interface DorkCategory {
   title: string;
   description: string;
   dorks: Dork[];
+  emoji?: string;
 }
 
 export interface OsintResource {

@@ -14,7 +14,10 @@ const CategorySection: React.FC<CategorySectionProps> = ({ category, onDorkSelec
   return (
     <section>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-cyan-400">{category.title}</h2>
+        <h2 className="text-2xl font-bold text-cyan-400">
+          <span className="mr-3">{category.emoji}</span>
+          {category.title}
+        </h2>
         <p className="text-slate-400 mt-1">{category.description}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

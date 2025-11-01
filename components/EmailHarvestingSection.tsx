@@ -3,6 +3,7 @@ import React from 'react';
 const categories = [
     {
         title: 'Kali Linux tools',
+        emoji: '🐧',
         color: 'bg-slate-600',
         tools: [
             { name: 'theHarvester', url: 'https://github.com/laramies/theHarvester', description: 'Gather emails, subdomains, hosts, etc.' },
@@ -11,6 +12,7 @@ const categories = [
     },
     {
         title: 'Online tools',
+        emoji: '☁️',
         color: 'bg-blue-800',
         tools: [
             { name: 'Hunter.io', url: 'https://hunter.io/', description: 'Find professional emails by domain.' },
@@ -21,6 +23,7 @@ const categories = [
     },
     {
         title: 'Browser Extensions',
+        emoji: '🧩',
         color: 'bg-black',
         tools: [
             { name: 'clearbit.com', url: 'https://www.clearbit.com/platform/connect', description: 'Find emails from within your inbox.' },
@@ -29,6 +32,7 @@ const categories = [
     },
     {
         title: 'Manual',
+        emoji: '🖐️',
         color: 'bg-blue-600',
         tools: [
             { name: 'LinkedIn', url: 'https://www.linkedin.com/', description: 'Search profiles for contact info.' },
@@ -42,7 +46,7 @@ const EmailHarvestingSection: React.FC = () => {
     return (
         <section className="mt-20">
             <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-slate-100">Harvesting Emails</h2>
+                <h2 className="text-3xl font-bold text-slate-100">📧 Harvesting Emails</h2>
                 <p className="text-slate-400 mt-2 max-w-3xl mx-auto">
                     A visual guide to popular tools and techniques for discovering email addresses, based on common OSINT methodologies.
                 </p>
@@ -52,6 +56,7 @@ const EmailHarvestingSection: React.FC = () => {
                     {categories.map(category => (
                         <div key={category.title}>
                             <h3 className={`text-lg font-semibold text-white px-4 py-2 rounded-md mb-4 text-center ${category.color}`}>
+                                <span className="mr-2">{category.emoji}</span>
                                 {category.title}
                             </h3>
                             <ul className="space-y-4">

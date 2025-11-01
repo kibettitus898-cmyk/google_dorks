@@ -19,7 +19,7 @@ const BreachedCredentialsSection: React.FC = () => {
     return (
         <section className="mt-20">
             <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold text-slate-100">Breached Credentials</h2>
+                <h2 className="text-3xl font-bold text-slate-100">🔑 Breached Credentials</h2>
                 <p className="text-slate-400 mt-2 max-w-3xl mx-auto">
                     Check if credentials have been compromised in known data breaches using these free and paid services.
                 </p>
@@ -29,7 +29,7 @@ const BreachedCredentialsSection: React.FC = () => {
                     {/* FREE Tools */}
                     <div>
                         <h3 className="text-xl font-bold text-center text-sky-400 mb-4 bg-sky-900/50 py-2 rounded-lg">
-                            FREE
+                           <span className="mr-2">🎉</span> FREE
                         </h3>
                         <ul className="space-y-4">
                             {freeTools.map(tool => (
@@ -46,7 +46,7 @@ const BreachedCredentialsSection: React.FC = () => {
                     {/* PAID Tools */}
                     <div>
                         <h3 className="text-xl font-bold text-center text-amber-400 mb-4 bg-slate-900/80 py-2 rounded-lg">
-                            PAID
+                            <span className="mr-2">💳</span> PAID
                         </h3>
                         <ul className="space-y-4">
                             {paidTools.map(tool => (

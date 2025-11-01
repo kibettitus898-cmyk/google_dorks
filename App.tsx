@@ -9,6 +9,8 @@ import Modal from './components/Modal';
 import TargetUrlInput from './components/TargetUrlInput';
 import OsintResourcesSection from './components/OsintResourcesSection';
 import ChecklistActionBar from './components/ChecklistActionBar';
+import EmailHarvestingSection from './components/EmailHarvestingSection';
+import EmailValidationSection from './components/EmailValidationSection';
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -175,10 +177,15 @@ const App: React.FC = () => {
             )}
           </div>
           
+        </div>
+
+        <EmailHarvestingSection />
+        <EmailValidationSection />
+
+        <div className="max-w-4xl mx-auto">
           <div className="mt-20">
             <OsintResourcesSection resources={OSINT_RESOURCES} />
           </div>
-
         </div>
       </main>
       <footer className="text-center p-6 text-slate-600 border-t border-slate-800 mt-12">

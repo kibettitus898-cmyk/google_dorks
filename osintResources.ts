@@ -17,11 +17,6 @@ export const OSINT_RESOURCES: OsintResource[] = [
     url: 'https://osintframework.com/',
   },
   {
-    name: 'theHarvester',
-    description: 'Gathers emails, subdomains, hosts, employee names, open ports and banners from public sources.',
-    url: 'https://github.com/laramies/theHarvester',
-  },
-  {
     name: 'BuiltWith',
     description: 'Find out what websites are built with. Uncover the technology stack of any website.',
     url: 'https://builtwith.com/',

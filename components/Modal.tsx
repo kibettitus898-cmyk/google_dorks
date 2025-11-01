@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Dork } from '../types';
 import CopyIcon from './icons/CopyIcon';
 import ExternalLinkIcon from './icons/ExternalLinkIcon';
@@ -7,19 +7,33 @@ import CloseIcon from './icons/CloseIcon';
 interface ModalProps {
   dork: Dork;
   onClose: () => void;
+  targetUrl: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ dork, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ dork, onClose, targetUrl }) => {
   const [copied, setCopied] = useState(false);
 
+  const finalExample = useMemo(() => {
+    if (!targetUrl.trim()) return dork.example;
+    
+    const siteOperator = `site:${targetUrl.trim()}`;
+    const siteRegex = /site:[^\s]+/g;
+
+    if (dork.example.match(siteRegex)) {
+      return dork.example.replace(siteRegex, siteOperator);
+    }
+    
+    return `${siteOperator} ${dork.example}`;
+  }, [dork.example, targetUrl]);
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(dork.example);
+    navigator.clipboard.writeText(finalExample);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleTryIt = () => {
-    const url = `https://www.google.com/search?q=${encodeURIComponent(dork.example)}`;
+    const url = `https://www.google.com/search?q=${encodeURIComponent(finalExample)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
@@ -66,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({ dork, onClose }) => {
         <div>
             <div className="bg-slate-900 rounded-md p-4">
                 <p className="text-sm text-slate-400 mb-1">Example:</p>
-                <p className="font-mono text-base text-emerald-400 break-words">{dork.example}</p>
+                <p className="font-mono text-base text-emerald-400 break-words">{finalExample}</p>
             </div>
             <div className="flex items-center space-x-3 mt-5">
                 <button

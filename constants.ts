@@ -1,4 +1,3 @@
-
 import { DorkCategory } from './types';
 
 export const DORK_CATEGORIES: DorkCategory[] = [
@@ -62,6 +61,16 @@ export const DORK_CATEGORIES: DorkCategory[] = [
         description: "Shows Google's cached version of a page.",
         example: 'cache:example.com',
       },
+      {
+        operator: 'info:',
+        description: 'Shows information about a specific URL, including cache, related pages, and links.',
+        example: 'info:example.com',
+      },
+       {
+        operator: 'link:',
+        description: 'Finds pages that link to a specified URL. (Note: Largely deprecated by Google).',
+        example: 'link:microsoft.com',
+      },
     ],
   },
   {
@@ -93,6 +102,11 @@ export const DORK_CATEGORIES: DorkCategory[] = [
         description: 'Searches for text within the anchor text of links.',
         example: 'inanchor:"click here for details"',
       },
+      {
+        operator: 'AROUND(X)',
+        description: 'Finds pages where two words are within X words of each other. A proximity search.',
+        example: 'security AROUND(5) breach',
+      },
     ],
   },
   {
@@ -115,9 +129,14 @@ export const DORK_CATEGORIES: DorkCategory[] = [
         example: 'jaguar speed -car -animal',
       },
       {
-        operator: 'OR or |',
+        operator: 'OR',
         description: 'Searches for one term OR another. Must be in uppercase.',
         example: 'passwords OR credentials',
+      },
+      {
+        operator: '|',
+        description: 'Acts as a logical OR, equivalent to the OR operator.',
+        example: 'inurl:admin | inurl:login',
       },
       {
         operator: '..',
@@ -131,4 +150,40 @@ export const DORK_CATEGORIES: DorkCategory[] = [
       },
     ],
   },
+  {
+    title: 'Specialized Search Operators',
+    description: 'These operators perform specific actions or retrieve specialized information directly in the search results.',
+    dorks: [
+      {
+        operator: 'define:',
+        description: 'Provides the definition of a word from various sources.',
+        example: 'define:phishing',
+      },
+      {
+        operator: 'weather:',
+        description: 'Displays the weather forecast for a specific location.',
+        example: 'weather:london',
+      },
+      {
+        operator: 'stocks:',
+        description: 'Retrieves stock market information for a specific ticker symbol.',
+        example: 'stocks:googl',
+      },
+      {
+        operator: 'map:',
+        description: 'Shows a map of a specified location.',
+        example: 'map:silicon valley',
+      },
+      {
+        operator: 'movie:',
+        description: 'Finds information about a specific movie, including showtimes if available.',
+        example: 'movie:the matrix',
+      },
+      {
+        operator: 'source:',
+        description: 'Restricts news searches to a specific source within Google News.',
+        example: 'malware source:wired',
+      },
+    ]
+  }
 ];

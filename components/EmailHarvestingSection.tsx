@@ -23,7 +23,8 @@ const categories = [
         title: 'Browser Extensions',
         color: 'bg-black',
         tools: [
-            { name: 'clearbit.com', url: 'https://www.clearbit.com/platform/connect', description: 'Find emails from within your inbox.' }
+            { name: 'clearbit.com', url: 'https://www.clearbit.com/platform/connect', description: 'Find emails from within your inbox.' },
+            { name: 'Email Hunter', url: 'https://chromewebstore.google.com/detail/email-hunter/mbindhfolmpijhodmgkloeeppmkhpmhc?hl=en&pli=1', description: 'Find email addresses from anywhere on the web.' }
         ]
     },
     {

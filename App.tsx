@@ -11,6 +11,10 @@ import OsintResourcesSection from './components/OsintResourcesSection';
 import ChecklistActionBar from './components/ChecklistActionBar';
 import EmailHarvestingSection from './components/EmailHarvestingSection';
 import EmailValidationSection from './components/EmailValidationSection';
+import OnlineProfilingSection from './components/OnlineProfilingSection';
+import BreachedCredentialsSection from './components/BreachedCredentialsSection';
+
+type Tab = 'dorks' | 'toolkit' | 'resources';
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,6 +22,7 @@ const App: React.FC = () => {
   const [selectedDork, setSelectedDork] = useState<Dork | null>(null);
   const [isChecklistMode, setIsChecklistMode] = useState(false);
   const [selectedDorksForPlan, setSelectedDorksForPlan] = useState<Set<string>>(new Set());
+  const [activeTab, setActiveTab] = useState<Tab>('dorks');
 
   const filteredCategories = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -134,59 +139,104 @@ const App: React.FC = () => {
     setSelectedDorksForPlan(new Set());
   };
 
+  const tabs: { id: Tab, label: string }[] = [
+    { id: 'dorks', label: 'Dorks' },
+    { id: 'toolkit', label: 'OSINT Toolkit' },
+    { id: 'resources', label: 'Resources' },
+  ];
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dorks':
+        return (
+          <>
+            <div className="max-w-4xl mx-auto">
+              <p className="text-center text-slate-400 mb-8">
+                An interactive cheat sheet for Google Dorking. Use these operators to refine your searches for OSINT research, finding specific information, and uncovering hidden data.
+              </p>
+              <div className="space-y-4">
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                <TargetUrlInput targetUrl={targetUrl} setTargetUrl={setTargetUrl} />
+              </div>
+              <div className="text-center mt-6">
+                <button
+                  onClick={handleEnterChecklistMode}
+                  className="px-6 py-2 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-500 transition-colors shadow-md disabled:bg-slate-600 disabled:cursor-not-allowed"
+                  disabled={isChecklistMode}
+                >
+                  Create a Plan
+                </button>
+              </div>
+            </div>
+            <div className="space-y-12 mt-10 max-w-4xl mx-auto">
+              {filteredCategories.length > 0 ? (
+                filteredCategories.map(category => (
+                  <CategorySection
+                    key={category.title}
+                    category={category}
+                    onDorkSelect={handleDorkSelect}
+                    targetUrl={targetUrl}
+                    isChecklistMode={isChecklistMode}
+                    selectedDorksForPlan={selectedDorksForPlan}
+                  />
+                ))
+              ) : (
+                  <div className="text-center py-16">
+                      <p className="text-2xl text-slate-500">No dorks found for "{searchTerm}"</p>
+                      <p className="text-slate-600 mt-2">Try a different search term.</p>
+                  </div>
+              )}
+            </div>
+          </>
+        );
+      case 'toolkit':
+        return (
+          <div className="space-y-16">
+            <EmailHarvestingSection />
+            <EmailValidationSection />
+            <OnlineProfilingSection />
+            <BreachedCredentialsSection />
+          </div>
+        );
+      case 'resources':
+        return (
+           <div className="max-w-4xl mx-auto">
+             <OsintResourcesSection resources={OSINT_RESOURCES} />
+           </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={`min-h-screen bg-slate-900 text-slate-200 font-sans ${isChecklistMode ? 'pb-24' : ''}`}>
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-center text-slate-400 mb-8">
-            An interactive cheat sheet for Google Dorking. Use these operators to refine your searches for OSINT research, finding specific information, and uncovering hidden data.
-          </p>
-          <div className="space-y-4">
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <TargetUrlInput targetUrl={targetUrl} setTargetUrl={setTargetUrl} />
-          </div>
-          
-          <div className="text-center mt-6">
-            <button
-              onClick={handleEnterChecklistMode}
-              className="px-6 py-2 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-500 transition-colors shadow-md disabled:bg-slate-600 disabled:cursor-not-allowed"
-              disabled={isChecklistMode}
-            >
-              Create a Plan
-            </button>
-          </div>
-
-          <div className="space-y-12 mt-10">
-            {filteredCategories.length > 0 ? (
-              filteredCategories.map(category => (
-                <CategorySection
-                  key={category.title}
-                  category={category}
-                  onDorkSelect={handleDorkSelect}
-                  targetUrl={targetUrl}
-                  isChecklistMode={isChecklistMode}
-                  selectedDorksForPlan={selectedDorksForPlan}
-                />
-              ))
-            ) : (
-                <div className="text-center py-16">
-                    <p className="text-2xl text-slate-500">No dorks found for "{searchTerm}"</p>
-                    <p className="text-slate-600 mt-2">Try a different search term.</p>
-                </div>
-            )}
-          </div>
-          
+        
+        <div className="mb-8 border-b border-slate-700">
+          <nav className="-mb-px flex justify-center space-x-2 md:space-x-6" aria-label="Tabs">
+              {tabs.map((tab) => (
+                  <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`${
+                          activeTab === tab.id
+                              ? 'border-cyan-400 text-cyan-400'
+                              : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-500'
+                      } whitespace-nowrap py-4 px-2 md:px-4 border-b-2 font-medium text-base md:text-lg transition-colors focus:outline-none`}
+                      aria-current={activeTab === tab.id ? 'page' : undefined}
+                  >
+                      {tab.label}
+                  </button>
+              ))}
+          </nav>
         </div>
 
-        <EmailHarvestingSection />
-        <EmailValidationSection />
-
-        <div className="max-w-4xl mx-auto">
-          <div className="mt-20">
-            <OsintResourcesSection resources={OSINT_RESOURCES} />
-          </div>
+        <div className="animate-fade-in">
+          {renderContent()}
         </div>
+
       </main>
       <footer className="text-center p-6 text-slate-600 border-t border-slate-800 mt-12">
         <p>For educational and research purposes only.</p>

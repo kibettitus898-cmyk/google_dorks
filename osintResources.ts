@@ -36,4 +36,9 @@ export const OSINT_RESOURCES: OsintResource[] = [
     description: 'An AI-powered tool for generating Google Dorks to streamline your OSINT research.',
     url: 'https://www.dorkgpt.com/',
   },
+  {
+    name: 'OsintLeak',
+    description: 'A search engine for finding leaked passwords and credentials from data breaches.',
+    url: 'https://osintleak.com/',
+  },
 ];

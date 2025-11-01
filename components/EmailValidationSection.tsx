@@ -8,7 +8,7 @@ const validationTools = [
     },
     {
         name: 'Emailchecker.net',
-        url: 'https://emailchecker.net/',
+        url: 'https://email-checker.net/',
         description: 'Verify if an email address is real and valid.'
     },
     {
@@ -20,6 +20,11 @@ const validationTools = [
         name: 'Experte Email Finder',
         url: 'https://www.experte.com/email-finder',
         description: 'Find and verify email addresses in bulk.'
+    },
+    {
+        name: 'Mail Tester',
+        url: 'https://app.mailtester.com/signin',
+        description: 'Check email validity and server health.'
     }
 ];
 
